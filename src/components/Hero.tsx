@@ -29,7 +29,7 @@ const particlesOptions = {
     color: { value: '#38bdf8' },
     links: { enable: true, color: '#a78bfa', distance: 150, opacity: 0.3, width: 1 },
     collisions: { enable: false },
-    move: { direction: 'none', enable: true, outModes: 'bounce', random: false, speed: 1.2, straight: false },
+    move: { enable: true, outModes: { default: 'bounce' as const }, random: false, speed: 1.2, straight: false },
     number: { density: { enable: true, area: 800 }, value: 60 },
     opacity: { value: 0.4 },
     shape: { type: 'circle' },
@@ -70,7 +70,6 @@ const Hero = () => {
         id="tsparticles"
         className="absolute inset-0 w-full h-full z-0"
         options={particlesOptions}
-        init={loadFull}
       />
       {/* Left: Details */}
       <div className="relative z-10 flex-1 flex flex-col items-center md:items-start justify-center max-w-xl w-full py-24 md:py-0 md:pl-16">
@@ -122,7 +121,7 @@ const Hero = () => {
         </div>
       </div>
       {/* Right: Photo and Floating Icons */}
-      <div className="relative z-10 flex-1 flex items-center justify-end w-full md:w-auto py-16 md:py-0 md:pr-24">
+      <div className="relative z-10 flex-1 flex items-center justify-center md:justify-end w-full md:w-auto py-16 md:py-0 md:pr-24">
         <div className="relative flex items-center justify-center">
           {/* Outer Glow Ring */}
           <div className="absolute w-[19rem] h-[19rem] rounded-full bg-gradient-to-tr from-blue-400 via-purple-400 to-pink-400 animate-photo-glow" style={{ filter: 'blur(16px)', zIndex: 1 }} />
