@@ -51,38 +51,27 @@ const Experience: React.FC = () => {
   ];
 
   return (
-    <motion.section
+    <section
       id="experience"
       className="py-20 bg-gray-50 dark:bg-gray-800"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.7, ease: 'easeOut' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ delay: 0.1, duration: 0.6, ease: 'easeOut' }}
-        >
+        <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
             Professional Experience
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Hands-on experience in DevOps automation, cloud technologies, and cybersecurity.
           </p>
-        </motion.div>
+        </div>
         <div className="space-y-8">
           {experiences.map((exp, index) => (
             <motion.div
               key={index}
               className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ delay: 0.2 + index * 0.15, duration: 0.6, ease: 'easeOut' }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 * index, ease: 'easeOut' }}
             >
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
                 <div className="flex-1">
@@ -141,7 +130,7 @@ const Experience: React.FC = () => {
           ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 
