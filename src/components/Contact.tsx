@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, Github, Linkedin, FileText } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -8,14 +9,33 @@ const Contact: React.FC = () => {
     subject: '',
     message: ''
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // Show success message or handle API call
-    alert('Thank you for your message! I\'ll get back to you soon.');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setSubmitting(true);
+    setStatus('idle');
+    try {
+      const response = await fetch('https://formspree.io/f/xpwlrkze', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -26,20 +46,38 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-white dark:bg-gray-900">
+    <motion.section
+      id="contact"
+      className="py-20 bg-white dark:bg-gray-900"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.7, ease: 'easeOut' }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ delay: 0.1, duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
             Get In Touch
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Ready to discuss your next project or explore collaboration opportunities? Let's connect!
           </p>
-        </div>
-
+        </motion.div>
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Info */}
-          <div className="space-y-8">
+          <motion.div
+            className="space-y-8"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}
+          >
             <div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
                 Let's Connect
@@ -49,7 +87,6 @@ const Contact: React.FC = () => {
                 or sharing insights about DevOps, cloud technologies, and cybersecurity. Feel free to reach out!
               </p>
             </div>
-
             <div className="space-y-6">
               {[
                 {
@@ -89,7 +126,6 @@ const Contact: React.FC = () => {
                 </div>
               ))}
             </div>
-
             <div className="mt-8">
               <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 Find me on social media
@@ -113,10 +149,15 @@ const Contact: React.FC = () => {
                 ))}
               </div>
             </div>
-          </div>
-
+          </motion.div>
           {/* Contact Form */}
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8">
+          <motion.div
+            className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' }}
+          >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
@@ -132,6 +173,7 @@ const Contact: React.FC = () => {
                     required
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="Your name"
+                    disabled={submitting}
                   />
                 </div>
                 <div>
@@ -147,10 +189,10 @@ const Contact: React.FC = () => {
                     required
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="your@email.com"
+                    disabled={submitting}
                   />
                 </div>
               </div>
-
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Subject
@@ -164,9 +206,9 @@ const Contact: React.FC = () => {
                   required
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   placeholder="What's this about?"
+                  disabled={submitting}
                 />
               </div>
-
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Message
@@ -180,21 +222,32 @@ const Contact: React.FC = () => {
                   rows={6}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white resize-none"
                   placeholder="Your message..."
+                  disabled={submitting}
                 />
               </div>
-
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                disabled={submitting}
               >
                 <Send className="w-5 h-5" />
-                Send Message
+                {submitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
-          </div>
+            {status === 'success' && (
+              <div className="mt-6 text-green-600 dark:text-green-400 text-center font-medium">
+                Thank you! Your message has been sent successfully.
+              </div>
+            )}
+            {status === 'error' && (
+              <div className="mt-6 text-red-600 dark:text-red-400 text-center font-medium">
+                Oops! Something went wrong. Please try again later.
+              </div>
+            )}
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

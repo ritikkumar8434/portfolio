@@ -1,5 +1,6 @@
 import React from 'react';
 import { Github, ExternalLink, Cloud, Server, Shield, Code } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Projects: React.FC = () => {
   const projects = [
@@ -46,22 +47,38 @@ const Projects: React.FC = () => {
   ];
 
   return (
-    <section id="projects" className="py-20 bg-white dark:bg-gray-900">
+    <motion.section
+      id="projects"
+      className="py-20 bg-white dark:bg-gray-900"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.7, ease: 'easeOut' }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ delay: 0.1, duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
             Featured Projects
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Innovative solutions showcasing expertise in DevOps, cloud automation, and security.
           </p>
-        </div>
-
+        </motion.div>
         <div className="grid lg:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <div
+            <motion.div
               key={index}
               className="bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ delay: 0.2 + index * 0.15, duration: 0.6, ease: 'easeOut' }}
             >
               <div className="relative group">
                 <img
@@ -74,7 +91,6 @@ const Projects: React.FC = () => {
                   <project.icon className="w-6 h-6 text-white" />
                 </div>
               </div>
-
               <div className="p-8">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
                   {project.title}
@@ -82,7 +98,6 @@ const Projects: React.FC = () => {
                 <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                   {project.description}
                 </p>
-
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tech.map((tech, i) => (
                     <span
@@ -93,7 +108,6 @@ const Projects: React.FC = () => {
                     </span>
                   ))}
                 </div>
-
                 <div className="flex gap-4">
                   <a
                     href={project.github}
@@ -113,11 +127,11 @@ const Projects: React.FC = () => {
                   </a>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

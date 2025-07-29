@@ -1,5 +1,6 @@
 import React from 'react';
 import { Award, ExternalLink } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Certifications: React.FC = () => {
   const certifications = [
@@ -38,22 +39,39 @@ const Certifications: React.FC = () => {
   ];
 
   return (
-    <section id="certifications" className="py-20 bg-gray-50 dark:bg-gray-800">
+    <motion.section
+      id="certifications"
+      className="py-20 bg-gray-50 dark:bg-gray-800"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.7, ease: 'easeOut' }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ delay: 0.1, duration: 0.6, ease: 'easeOut' }}
+        >
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
             Certifications
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Professional certifications validating expertise in DevOps, networking, and cloud technologies.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {certifications.map((cert, index) => (
-            <div
+            <motion.div
               key={index}
               className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ delay: 0.2 + index * 0.15, duration: 0.6, ease: 'easeOut' }}
             >
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center">
@@ -82,17 +100,28 @@ const Certifications: React.FC = () => {
                 <span className="text-sm text-gray-500 dark:text-gray-400">
                   ID: {cert.credentialId}
                 </span>
-                <button className="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200">
+                <a
+                  className="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200"
+                  href="https://www.linkedin.com/in/ritikumarsahu/details/certifications/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <ExternalLink className="w-4 h-4" />
                   Verify
-                </button>
+                </a>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         <div className="mt-12 text-center">
-          <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg">
+          <motion.div
+            className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-lg"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ delay: 0.2, duration: 0.6, ease: 'easeOut' }}
+          >
             <div className="flex items-center justify-center mb-4">
               <div className="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center">
                 <Award className="w-8 h-8 text-white" />
@@ -105,10 +134,10 @@ const Certifications: React.FC = () => {
               Committed to staying current with the latest technologies and industry best practices. 
               Currently pursuing additional certifications in Kubernetes, AWS Solutions Architect, and AI/ML.
             </p>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
